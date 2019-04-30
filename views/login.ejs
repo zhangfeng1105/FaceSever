@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>人脸点名管理系统登录</title>
+    <script type="text/javascript">
+      $(function(){
+        $(window).resize(function () {          //当浏览器大小变化时
+          var dh = $(window).height() * 0.35;
+          $("#logindiv").css({"margin-top":dh});
+        });
+        var dh = $(window).height() * 0.35;
+        $("#logindiv").css({"margin-top":dh});
+
+        $("#login").click(function(){
+          if ($("#nameid").val() == "") {
+            alert("请填写用户名");
+          }else if($("#passwordid").val() == "") {
+            alert("请填写密码");}else{
+            $.post("/login",{
+              "name":$("#nameid").val(),
+              "password":$("#passwordid").val()
+            },function(result){
+              if (result == -1) {
+                alert("用户名不存在");
+              }else if (result == 0) {
+                alert("密码错误");
+              }else{
+                 window.location.href = "/";
+              }
+            })
+          }
+        })
+
+      })
+
+      $(document).keyup(function(event){
+        if(event.keyCode ==13){
+            $("#login").trigger("click");
+        }
+      });
+
+    </script>
+    <style type="text/css">
+
+    </style>
+  </head>
+  <body>
+    <div id="logindiv" style="position: relative;;">
+      <form action="">
+      <table align="center">
+        <caption style="font-size:20px;">管理系统登录</caption>
+        <tr>
+          <td>姓名:</td>
+          <td><input id= "nameid" type="text" name="name" onkeyup="this.value=this.value.replace(/\s+/g,'')"></td>
+        </tr>
+        <tr>
+          <td>密码:</td>
+          <td><input id="passwordid" type="password" name="password"></td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <button type="button" name="button" id = "login">登录</button>
+          </td>
+        </tr>
+      </table>
+      </form>
+    </div>
+  </body>
+</html>

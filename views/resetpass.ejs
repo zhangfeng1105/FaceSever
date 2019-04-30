@@ -1,0 +1,90 @@
+  <head>
+    <script type="text/javascript">
+      $(function() {
+        $(window).resize(function() { //当浏览器大小变化时
+          var dh = $(window).height() * 0.35;
+          var dhh = $(window).height()* 0.65 -103;
+          $("#logindiv").height(dhh);
+          var iw = $(document.body).width() - 300;
+          $("#logindiv").width(iw)
+          $("#logindiv").css({
+            "padding-top": dh
+          });
+        });
+        var dh = $(window).height() * 0.35;
+        $("#logindiv").css({
+          "padding-top": dh
+        });
+        var dhh = $(window).height()* 0.65 -103;
+        $("#logindiv").height(dhh);
+        var iw = $(document.body).width() - 300;
+        $("#logindiv").width(iw);
+
+        $("#login").click(function() {
+          if ($("#oldpasswordid").val() == "") {
+            alert("请填写旧密码");
+          } else if ($("#newpasswordid1").val() == "") {
+            alert("请填写新密码");
+          } else if ($("#newpasswordid2").val() == "") {
+            alert("请再填写新密码");
+          } else if ($("#newpasswordid2").val() != $("#newpasswordid1").val()) {
+            alert("新密码不一致，请重新填写");
+          } else if ($("#newpasswordid2").val() == $("#oldpasswordid").val()) {
+            alert("新密码与旧密码相同，请重新填写");
+          } else {
+            $.post("/resetpass", {
+              "oldpassword": $("#oldpasswordid").val(),
+              "newpassword": $("#newpasswordid2").val()
+            }, function(result) {
+              if (result == -1) {
+                alert("原密码错误");
+              } else if (result == 0) {
+                alert("修改成功，请重新登录");
+                parent.location.reload()
+              }
+            })
+          }
+        })
+
+
+      })
+    </script>
+    <style type="text/css">
+      .btn {
+        background-color: #20b2aa;
+        color: white;
+        /* padding: 18px; */
+        width: 100px;
+        height: 40px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="logindiv">
+      <form action="">
+        <table align="center">
+          <tr>
+            <td>旧密码:</td>
+            <td><input id="oldpasswordid" type="password" name="password"></td>
+          </tr>
+          <tr>
+            <td>新密码:</td>
+            <td><input id="newpasswordid1" type="password" name="password"></td>
+          </tr>
+          <tr>
+            <td>新密码:</td>
+            <td><input id="newpasswordid2" type="password" name="password"></td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center">
+              <button class="btn" type="button" name="button" id="login">修改</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>

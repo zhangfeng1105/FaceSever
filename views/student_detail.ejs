@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <title><%=id%></title>
+  <script type="text/javascript">
+    window.onload = function() {
+      if (<%=iamge%>) {
+        $("#modifyImage").css('display', 'inline');
+      } else {
+        $('#addImage').css('display', 'inline');
+      }
+    }
+
+    function addimg(file) {
+      var imageView = document.getElementById('image');
+      // $(imageView).css('display', 'block');
+      if (file.files && file.files[0]) {
+
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+          $(imageView).attr('src', evt.target.result);
+        }
+        reader.readAsDataURL(file.files[0]);
+        uploadimg();
+      } else {
+        alert('请选择图片文件');
+      }
+    }
+
+    function uploadimg() {
+      var formData = new FormData();
+      var files = $('#imag')[0].files;
+      if (files.length > 0) {
+        formData.append('image', files[0]);
+        $.ajax({
+          url: '/uploadface/<%=id%>',
+          data: formData,
+          type: 'POST',
+          processData: false,
+          contentType: false,
+          success: function(result) {
+            $('#imag').val('');
+            alert('更新数据成功');
+            $("#modifyImage").css('display', 'inline');
+            $('#addImage').css('display', 'none');
+          },
+          error: function(obj) {
+            $('#imag').val('');
+            alert('更新数据失败');
+          }
+        })
+      }
+    }
+
+    function del() {
+      var r = confirm("确认删除!");
+      if (r == true) {
+        $.ajax({
+          url: '/student/del',
+          data: {
+            "id": <%=id%>
+          },
+          type: "post",
+          success: function(data) {
+            alert('删除成功');
+            window.location.href = "/student";
+          },
+          error: function(data) {
+            alert('删除失败');
+          }
+        });
+      }
+    }
+  </script>
+  <style>
+    * {
+      margin: 0px;
+      text-align: left;
+    }
+
+    input[type="button"] {
+      font-size: 18px;
+      text-align: center;
+      color: white;
+      background-color: #40E0D0;
+      height: 40px;
+      margin-left: 10px;
+    }
+
+    .title {
+      margin-right: 10px;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main" style="padding: 10px 10%;">
+    <div class="center_screen" style="width:1024px; height: 900px; padding:20px 10px;">
+      <span class="title" style="vertical-align:middle;">学号:<%=id%></span>
+      <input class="input" type="button" value="删除学生" class="common_btn" onclick="del()">
+      <br>
+      <span class="title" style="vertical-align:middle;">姓名:<%=name%></span>
+      <div class="image" style="margin-top: 10px;">
+        <div style="margin-bottom: 10px;">
+          <span class="title" style="vertical-align:middle;">照片:</span>
+          <input id="addImage" type="button" name="addImage" value="添加照片" style="vertical-align:middle;display:none;" onclick="document.getElementById('imag').click();">
+          <input id="modifyImage" type="button" name="modifyImage" value="修改照片" style="vertical-align:middle;display:none;" onclick="document.getElementById('imag').click();">
+          <!-- <input id="uploadimg" type="button" value="确认上传" style="vertical-align:middle;display:none;" onclick='uploadimg()'> -->
+          <input type="file" name="fileimg" id="imag" onchange="addimg(this)" style="display: none" />
+        </div>
+        <div style="text-align: center;">
+          <img id="image" src="/student/getimage/<%=id%>" height="320" width="320" alt="无图片">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

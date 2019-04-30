@@ -1,0 +1,88 @@
+<!-- <html> -->
+
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+    $(function() {
+      $("td").click(function() {
+        $("td").parent().css("border-style", "none");
+        $(this).parent().css("border-style", "outset");
+      });
+    })
+  </script>
+  <style>
+    #customers {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #customers td,
+    #customers th {
+      font-size: 1em;
+      border: 1px solid #98bf21;
+      padding: 3px 7px 2px 7px;
+      height: 20px;
+    }
+
+    #customers th {
+      font-size: 1.1em;
+      text-align: left;
+      padding-top: 5px;
+      padding-bottom: 4px;
+      background-color: #20b2aa;
+      color: #ffffff;
+      height: 30px;
+    }
+
+    #customers tr.alt td {
+      color: #000000;
+      background-color: #40E0D0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="iframe">
+    <div class="" style="margin-bottom:10px;">
+      <h2 style="color:#63B8FF">签到记录表</h2>
+
+    </div>
+    <% if(date.length>0){%>
+    <table id="customers">
+      <tr>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>班级</th>
+        <th>签到状况</th>
+        <th>日期</th>
+      </tr>
+
+      <%for(var i = 0;i<date.length;i++){
+                if(i%2 == 0){
+                      %><tr>
+        <td><%=date[i][0]%></td>
+        <td><%=date[i][1]%></td>
+        <td><%=date[i][2]%></td>
+        <td><%=date[i][3]%></td>
+        <td><%=date[i][4]%></td>
+      </tr>
+      <%}
+                if(i%2 != 0){
+                  %><tr class="alt">
+        <td><%=date[i][0]%></td>
+        <td><%=date[i][1]%></td>
+        <td><%=date[i][2]%></td>
+        <td><%=date[i][3]%></td>
+        <td><%=date[i][4]%></td>
+      </tr>
+      <%}
+    }%>
+    </table>
+    <%}else{%>
+        <h3 style="color:#FF4500;" align="center">空信息</h3>
+    <%} %>
+  </div>
+</body>
+
+<!-- </html> -->

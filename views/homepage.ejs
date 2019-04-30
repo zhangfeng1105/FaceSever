@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <title>人脸点名管理系统</title>
+  <script type="text/javascript">
+    $(function() {
+      $(window).resize(function() { //当浏览器大小变化时
+        var iw = $(document.body).width() - $("#menu").width() - 150;
+        $("#iframe").width(iw);
+        var dh = $(window).height() - 120;
+        $("#menu").height(dh);
+        $("#iframe").height($("#menu").height() - 2);
+      });
+      var dh = $(window).height() - 120;
+      $("#menu").height(dh);
+      $("#iframe").height($("#menu").height() - 2);
+      var iw = $(document.body).width() - $("#menu").width() - 150;
+      $("#iframe").width(iw);
+
+      $("#menu1").click(function() {
+        window.location.href = "/";
+      });
+      $("#menu2").click(function() {
+        window.location.href = "/user";
+      });
+      $("#menu3").click(function() {
+        window.location.href = "/student";
+      });
+      $("#resetpass").click(function() {
+        window.location.href = "/resetpass";
+      });
+      $("#<%=menu%>").css({
+        "background": "#20b2aa"
+      });
+  });
+  </script>
+  <style type="text/css">
+    .left-item {
+      border: 2px solid #a1a1a1;
+      padding: 10px 10px;
+      margin-bottom: 5px;
+      margin-left: 5px;
+      background: #dddddd;
+      width: 118px;
+      border-radius: 25px;
+      font-size: 18px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .left-item:hover {
+      color: white;
+    }
+
+    .adminimg {
+      cursor: pointer;
+    }
+
+    .adminimg:hover {
+      background-color: #40E0D0;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      min-width: 100px;
+      right: 0;
+    }
+
+    .dropdown-content .donw {
+      color: black;
+      padding: 15.5px 16px;
+      text-decoration: none;
+      display: block;
+      background-color: #F5F5F5;
+    }
+
+    .dropdown-content .donw:hover {
+      background-color: #20b2aa;
+      color: white;
+    }
+
+    .dropbtn {
+      background-color: white;
+      /* color: white; */
+      /* padding: 18px; */
+      width: 100px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header" style="background-color:#20b2aa;height:50px;">
+    <img src="images/head1.png" alt="图片加载失败" style="float:left;padding:10px 10px 0px 10px;height:35px">
+    <div id="admin" class="dropdown" style="float:right;color:#ffffff;margin:auto;height:51px;">
+      <img class="adminimg" src="images/admin.png" alt="图片加载失败" style="padding:12px 10px 0px 10px;height:36px;">
+      <div class="dropdown-content">
+        <a href="/logout" class="donw">注销</a>
+        <button id="resetpass" type="button" name="button" class="donw dropbtn">修改密码</button>
+      </div>
+    </div>
+    <h1 style="cursor: default;color:#ffffff;text-align:left;padding-top:12px;font-size:25px;" onselectstart="return false;">人脸点名管理系统</h1>
+  </div>
+  <div id="container" style="margin-top:0px;background: #000000">
+    <!-- <div id = "header-image" style = "background-color:#008080;height:10px;"></div> -->
+    <div id="menu" style="background-color:#F5F5F5;width:150px;float:left;padding-top:20px" onselectstart="return false;">
+      <div id="menu1" class="left-item">
+        签到状况
+      </div>
+      <div id="menu2" class="left-item">
+        用户管理
+      </div>
+      <div id="menu3" class="left-item">
+        学生管理
+      </div>
+    </div>
+    <div style="background: #ffffff;float:left;border:1px solid #FFE1FF;padding:0px 20px 0px 20px">
+      <%- body %>
+    </div>
+  </div>
+  <div id="footer" style="cursor: default;clear:both;text-align:center;" onselectstart="return false;">版权 © <a href="http://www.lcu.edu.cn/" target="_blank">lcu.edu.cn</a></div>
+</body>
+
+</html>
